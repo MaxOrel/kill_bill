@@ -58,7 +58,7 @@ form.addEventListener('submit', function (evt) {
                 })
                 alert('Все ваши карточки удалены');
             })
-            .catch((err) => alert(`ошибка ${err.message}, проверьте правильность ввода данных`))
+            .catch((err) => alert(`ошибка, проверьте правильность ввода данных`))
         })
 
     
