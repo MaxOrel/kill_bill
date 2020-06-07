@@ -4,9 +4,11 @@ form.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
     const tokenValue = form.querySelector('#token').value;
+    const cohortValue = form.querySelector('#cohort').value;
+
 
     const api = {
-        baseUrl: 'https://praktikum.tk/cohort11',
+        baseUrl: `https://praktikum.tk/${cohortValue}`,
         headers: {
             authorization: tokenValue,
             'Content-Type': 'application/json'
@@ -28,7 +30,7 @@ form.addEventListener('submit', function (evt) {
             }
         })
         .then( meId => {
-            fetch(`https://praktikum.tk/cohort11/cards`, {
+            fetch(`https://praktikum.tk/${cohortValue}/cards`, {
                 headers: api.headers
             })
             .then(res => {
@@ -40,7 +42,7 @@ form.addEventListener('submit', function (evt) {
             .then((content) => {
                 content.forEach(element => {
                     if (element.owner._id === meId) {
-                        fetch(`https://praktikum.tk/cohort11/cards/${element._id}`, {
+                        fetch(`https://praktikum.tk/${cohortValue}/cards/${element._id}`, {
                             method: 'DELETE',
                             headers: api.headers
                         })
@@ -53,9 +55,10 @@ form.addEventListener('submit', function (evt) {
                             console.log(err);
                         });
                     }
-        
-                });
-            });
+                })
+                alert('Все ваши карточки удалены');
+            })
+            .catch((err) => alert(`ошибка ${err.message}, проверьте правильность ввода данных`))
         })
 
     
