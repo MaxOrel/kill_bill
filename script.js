@@ -1,7 +1,11 @@
 const form = document.querySelector('#kill_bill');
+const button = form.querySelector('.button');
 
 form.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    button.textContent = 'Удаляем...'
+    button.classList.add('popup__button_disabled');
+    button.setAttribute('disabled', 'disabled');
 
     const tokenValue = form.querySelector('#token').value;
     const cohortValue = form.querySelector('#cohort').value;
@@ -57,6 +61,9 @@ form.addEventListener('submit', function (evt) {
                     }
                 })
                 alert('Все ваши карточки удалены');
+                button.textContent = 'Удалить мои карточки';
+                button.classList.remove('popup__button_disabled');
+                button.removeAttribute('disabled');
             })
             .catch((err) => alert(`ошибка, проверьте правильность ввода данных`))
         })

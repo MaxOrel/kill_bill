@@ -1,27 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Удалить карточки</title>
+    <link rel="stylesheet" href="./popup/popup.css">
 </head>
 <body>
-    <div class="form">
-        <form id="kill_bill" action="">
-            <label>
-                <span class="form__label">
-                    Введите когорту
-                </span>
-                <input id="cohort" type="text" name="cohort">
-            </label>
-            <label>
-                <span class="form__label">
-                    Введите токен
-                </span>
-                <input id="token" type="text" name="token">
-            </label>
-            <button type="submit">Удалить мои карточки</button>
-        </form>
+    <div class="popup popup_is-opened">
+        <div class="popup__content">
+          <h3 class="popup__title">Введите данные студента</h3>
+          <form id="kill_bill" class="popup__form" name="delete-cards" novalidate>
+              <input type="text" name="cohort" class="popup__input" id="cohort" placeholder="Введите когорту" required>
+              <input type="text" name="token" class="popup__input" id="token" placeholder="Введите токен" required>
+              <button class="button popup__button popup__button_place_edit" type="submit">Удалить мои карточки</button>
+          </form>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>
