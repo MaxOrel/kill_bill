@@ -1,19 +1,33 @@
 const form = document.querySelector('#kill_bill');
+const button = form.querySelector('.button');
+const errorMessages = {
+    textErrorEmptyString: 'Это обязательное поле',
+    textErrorLength: 'Должно быть не менее 4 символов',
+}
+
+const formManager = new FormValidator(form, errorMessages);
+const cleanForm = formManager.setEventListeners();
+formManager.setSubmitButtonState(formManager.checkFormValidity(form));
 
 form.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    button.textContent = 'Удаляем...'
+    button.classList.add('popup__button_disabled');
+    button.setAttribute('disabled', 'disabled');
 
     const tokenValue = form.querySelector('#token').value;
+    const cohortValue = form.querySelector('#cohort').value;
+
 
     const api = {
-        baseUrl: 'https://praktikum.tk/cohort11',
+        baseUrl: `https://praktikum.tk/${cohortValue}`,
         headers: {
             authorization: tokenValue,
             'Content-Type': 'application/json'
         }
     }
 
-    fetch(`https://praktikum.tk/cohort11/users/me`, {
+    fetch(`https://praktikum.tk/${cohortValue}/users/me`, {
         headers: api.headers
     })
         .then(res => {
@@ -28,7 +42,7 @@ form.addEventListener('submit', function (evt) {
             }
         })
         .then( meId => {
-            fetch(`https://praktikum.tk/cohort11/cards`, {
+            fetch(`https://praktikum.tk/${cohortValue}/cards`, {
                 headers: api.headers
             })
             .then(res => {
@@ -40,7 +54,7 @@ form.addEventListener('submit', function (evt) {
             .then((content) => {
                 content.forEach(element => {
                     if (element.owner._id === meId) {
-                        fetch(`https://praktikum.tk/cohort11/cards/${element._id}`, {
+                        fetch(`https://praktikum.tk/${cohortValue}/cards/${element._id}`, {
                             method: 'DELETE',
                             headers: api.headers
                         })
@@ -53,9 +67,13 @@ form.addEventListener('submit', function (evt) {
                             console.log(err);
                         });
                     }
-        
-                });
-            });
+                })
+                alert('Все ваши карточки удалены');
+                button.textContent = 'Удалить мои карточки';
+                button.classList.remove('popup__button_disabled');
+                button.removeAttribute('disabled');
+            })
+            .catch((err) => alert(`ошибка, проверьте правильность ввода данных`))
         })
 
     
